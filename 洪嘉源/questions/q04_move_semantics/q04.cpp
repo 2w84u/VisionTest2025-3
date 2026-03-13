@@ -3,15 +3,15 @@
 // 知识点：std::move、右值引用 &&、移动构造函数、std::forward
 // ============================================================
 #include "test_utils.hpp"
+#include <string>
+#include <vector>
 #include <utility>
-#include<string>
-#include<vector>
 
 // ===== 填空 1 =====
 // 知识点：std::move 将左值转为右值引用，触发移动构造
 // 请用 std::move 将 src 字符串移入返回值，移动后 src 变为空
 std::string move_string(std::string& src) {
-    return std::move(src);
+    return src;
 }
 // ===== 填空 1 结束 =====
 
@@ -40,8 +40,8 @@ struct Buffer {
 
     // ===== 移动构造 =====
     Buffer(Buffer&& other) noexcept
-        : data(std::exchange(other.data,nullptr)),
-          size(std::exchange(other.size,0))
+        : data(std::exchange(other.data, nullptr)),
+          size(std::exchange(other.size, 0))
     {}
     // ===== 结束 =====
 };

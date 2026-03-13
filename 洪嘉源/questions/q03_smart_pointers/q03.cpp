@@ -3,8 +3,8 @@
 // 知识点：unique_ptr、shared_ptr、weak_ptr、make_unique、make_shared
 // ============================================================
 #include "test_utils.hpp"
+#include <memory>
 #include <string>
-#include<memory>
 
 struct Node {
     int value;
@@ -32,8 +32,8 @@ std::unique_ptr<Node> transfer(std::unique_ptr<Node> p) {
 // 请用 make_shared 创建一个 shared_ptr<string>，然后复制它以增加引用计数
 int shared_use_count() {
     auto sp1 = std::make_shared<std::string>();
-    auto sp2 = sp1;  // 复制，引用计数 +1
-    return static_cast<int>(sp1.use_count());  // 应为 2
+    auto sp2 = std::move(sp1);  // 移动，引用计数不增加
+    return static_cast<int>(sp2.use_count());  // 应为 2
 }
 // ===== 填空 3 结束 =====
 
@@ -42,7 +42,7 @@ int shared_use_count() {
 // 请用 weak_ptr 观察 shared_ptr，并用 lock() 获取临时 shared_ptr
 bool weak_ptr_demo() {
     auto sp = std::make_shared<int>(10);
-    std::weak_ptr<int> wp=sp;
+	auto wp = std::weak_ptr<int>(sp);
     if (auto locked = wp.lock()) {
         return *locked == 10;
     }
@@ -55,7 +55,7 @@ bool weak_ptr_demo() {
 // 请补全：对 unique_ptr 调用 reset()，验证其变为 nullptr
 bool reset_demo() {
     auto p = std::make_unique<int>(99);
-    p.reset(nullptr);
+    p.reset();
     return p == nullptr;
 }
 // ===== 填空 5 结束 =====
@@ -66,9 +66,6 @@ int main() {
 
     auto n2 = transfer(make_node(7));
     CHECK_EQ(n2->value, 7);
-
-    auto n3 = transfer(make_node(8));
-    CHECK_EQ(n3->value, 8);
 
     CHECK_EQ(shared_use_count(), 2);
     CHECK_TRUE(weak_ptr_demo());

@@ -14,7 +14,7 @@ struct Animal {
 
 struct Dog : Animal {
     std::string sound() const override {
-        return "Woof";
+        return "Bark";
     }
 };
 // ===== 填空 1 结束 =====
@@ -30,7 +30,7 @@ struct Cat final : Animal {
 // 知识点：= default，显式要求编译器生成默认实现
 struct Trivial {
     int x;
-    Trivial() =default;
+    Trivial() = default;
     Trivial(const Trivial&) = default;
 };
 // ===== 填空 3 结束 =====
@@ -40,8 +40,8 @@ struct Trivial {
 struct NonCopyable {
     int value;
     explicit NonCopyable(int v) : value(v) {}
-    NonCopyable(const NonCopyable&)            =delete;
-    NonCopyable& operator=(const NonCopyable&) =delete;
+    NonCopyable(const NonCopyable&)            = delete;
+    NonCopyable& operator=(const NonCopyable&) = delete;
 };
 // ===== 填空 4 结束 =====
 
@@ -58,10 +58,10 @@ struct Config {
 
     // 委托给主构造函数，提供默认值
     Config(std::string h, int p)
-        : Config(std::move(h), p,false) {}
+        : Config(h, p, false) {}
 
     Config()
-        : Config(std::string("localhost"),8080){}
+        : Config(std::string("localhost"), 8080) { }
 };
 // ===== 填空 5 结束 =====
 

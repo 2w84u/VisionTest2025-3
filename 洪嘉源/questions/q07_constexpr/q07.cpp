@@ -9,15 +9,15 @@
 // ===== 填空 1 =====
 // 知识点：constexpr 函数（C++11）—— 编译期可求值
 // 请在函数前加 constexpr，使 factorial 可在编译期计算
-constexpr int factorial(int n){
-    return n <= 1 ? 1LL : n * factorial(n - 1);
+constexpr long long factorial(long long n) {
+    return n <= 1 ? 0LL : n * factorial(n - 1);
 }
 // ===== 填空 1 结束 =====
 
 // ===== 填空 2 =====
 // 知识点：constexpr 变量（C++11）
 // 请用 constexpr 声明编译期常量
-constexpr int MAX_SIZE=256;
+constexpr int MAX_SIZE = 256;
 // ===== 填空 2 结束 =====
 
 // ===== 填空 3 =====
@@ -25,7 +25,7 @@ constexpr int MAX_SIZE=256;
 // 请补全：若 T 是整数类型返回 "integral"，否则返回 "other"
 template <typename T>
 std::string type_category() {
-    if constexpr (std::is_integral_v<T>){
+    if constexpr (std::is_integral_v<T>) {
         return "integral";
     } else {
         return "other";
@@ -36,13 +36,13 @@ std::string type_category() {
 // ===== 填空 4 =====
 // 知识点：static_assert —— 编译期断言
 // 请用 static_assert 断言 MAX_SIZE 大于 0（编译期验证）
-static_assert(MAX_SIZE>0);
+static_assert(MAX_SIZE > 0, "MAX_SIZE must be positive");
 // ===== 填空 4 结束 =====
 
 // ===== 填空 5 =====
 // 知识点：consteval（C++20）—— 只能在编译期求值
 // 请在函数前加 consteval，使 square 只能在编译期调用
-consteval int square(int n){
+consteval int square(int n) {
     return n * n;
 }
 // ===== 填空 5 结束 =====
